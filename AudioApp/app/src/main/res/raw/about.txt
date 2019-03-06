@@ -1,0 +1,17 @@
+//Use this to comment on anything.
+//Comments must be on a new line and not after text.
+//To specify a header use <Header>Text Starts...
+//Make sure there is no space.    ^
+<Header>LightSys EmailHelper (Android App)
+Copyright © 2019 LightSys Technology Services, Inc.
+This app was created during a LightSys Technology Services Code-a-thon by a team from Cedarville University
+
+
+Learn more about LightSys Technology Services at
+https://lightsys.org/about
+
+<Header>Open Source
+This app's source code is also available under the GPLv3 open-source license at:
+https://github.com/LightSys/
+
+This app includes the following open source libraries:

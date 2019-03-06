@@ -1,0 +1,20 @@
+<course>
+    name:Spiritual Continuum;
+    <lesson>
+        name:Be Born Again;
+        mp3:born_again_1.mp3;
+        text:this_text.txt;
+    </lesson>
+    <lesson>
+        name:Set Your Mind On The Spirit;
+        mp3:set_mind_spirit_2.mp3;
+    </lesson>
+    <lesson>
+        name:Be Filled with the Spirit;
+        mp3:filled_spirit_3.mp3;
+    </lesson>
+    <lesson>
+       name:Worship in the Spirit;
+       mp3:worship_spirit_4.mp3;
+    </lesson>
+</course>

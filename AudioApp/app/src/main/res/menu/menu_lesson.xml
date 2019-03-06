@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.lightsys.audioapp.MainActivity" >
+    <item android:id="@+id/action_notes"
+        android:title="@string/action_notes"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>

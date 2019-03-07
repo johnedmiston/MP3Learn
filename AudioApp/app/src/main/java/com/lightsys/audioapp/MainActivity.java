@@ -142,18 +142,21 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(0,0);
         courses.setLayoutParams(size);
     }
+
     public void expandCourses(){
         LinearLayout courses = findViewById(R.id.content_courses);
         courses.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         courses.setLayoutParams(size);
     }
+
     public void minimizeLessons() {
         LinearLayout lessons = findViewById(R.id.content_lessons);
         lessons.setVisibility(View.INVISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(0,0);
         lessons.setLayoutParams(size);
     }
+
     public void expandLessons(){
         LinearLayout lessons = findViewById(R.id.content_lessons);
         lessons.setVisibility(View.VISIBLE);
@@ -173,8 +176,6 @@ public class MainActivity extends AppCompatActivity {
         audio.putExtra("course_name",select.name);
         audio.putExtra("lesson_name",lesson_name);
         audio.putExtra("lesson_mp3",selectedLesson.mp3);
-        expandCourses();
-        minimizeLessons();
         startActivity(audio);
     }
 }

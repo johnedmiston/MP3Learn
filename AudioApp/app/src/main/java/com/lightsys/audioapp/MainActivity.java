@@ -144,6 +144,12 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             //Put Action Code here when they select it.
         }
+        else if (id == R.id.action_all_notes){
+            //Put Action Code here when they select it.
+            //Intent about = new Intent(this, /*Enter class name*/.class);
+           // startActivity(about);
+            return true;
+        }
         else if(id == R.id.action_about){
             Intent about = new Intent(this, About.class);
             startActivity(about);

@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.util.Scanner;
@@ -20,6 +21,8 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
     ArrayList Courses;
     int selectedCourse;
+    Button backToCourses;
+    public boolean coursesOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +32,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getCourseData();
         initRecyclerView();
-
-
+        backToCourses = findViewById(R.id.back_to_courses);
+        backToCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expandCourses();
+            }
+        });
     }
 
     private void getCourseData() {
@@ -89,13 +97,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
     private void initLessonRecyclerView(Course c){
         RecyclerView recyclerView = findViewById(R.id.recycler_view_lesson);
         lessonRecyclerView adapter = new lessonRecyclerView(c.lessons, this,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-    
+
     /*
     private void initNoteRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.recycler_view_note);
@@ -114,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         lesson.putExtra("lesson_mp3","l1_born_again.mp3");
         startActivity(lesson);
     }
-
 
     //Open menu
     @Override
@@ -144,24 +152,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void minimizeCourses() {
-        LinearLayout courses = findViewById(R.id.content_courses);
-        courses.setVisibility(View.INVISIBLE);
-        LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(0,0);
-        courses.setLayoutParams(size);
-    }
-
     public void expandCourses(){
         LinearLayout courses = findViewById(R.id.content_courses);
         courses.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         courses.setLayoutParams(size);
-    }
-
-    public void minimizeLessons() {
+        //Set coursesOpen to true because we just opened it
+        coursesOpen = true;
+        //minimize the lesson
         LinearLayout lessons = findViewById(R.id.content_lessons);
         lessons.setVisibility(View.INVISIBLE);
-        LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(0,0);
+        size = new LinearLayout.LayoutParams(0,0);
         lessons.setLayoutParams(size);
     }
 
@@ -170,6 +171,13 @@ public class MainActivity extends AppCompatActivity {
         lessons.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lessons.setLayoutParams(size);
+        //Set coursesOpen to false because we are closing it
+        coursesOpen = false;
+        //minimize Courses
+        LinearLayout courses = findViewById(R.id.content_courses);
+        courses.setVisibility(View.INVISIBLE);
+        size = new LinearLayout.LayoutParams(0,0);
+        courses.setLayoutParams(size);
     }
 
     public void setSelectedCourse(int position) {

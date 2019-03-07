@@ -2,16 +2,22 @@
 //Comments must be on a new line and not after text.
 //To specify a header use <Header>Text Starts...
 //Make sure there is no space.    ^
-<Header>LightSys EmailHelper (Android App)
-Copyright © 2019 LightSys Technology Services, Inc.
-This app was created during a LightSys Technology Services Code-a-thon by a team from Cedarville University
-
+<Header>AudioApp (Android App)
+This app was created during a LightSys Technology Services Code-a-thon by a team from Cedarville University.
+The team consisted of
+Claire Bedard
+Daniel Garcia
+DSHADE
+Jeremiah Bray
 
 Learn more about LightSys Technology Services at
 https://lightsys.org/about
 
+The app was created for Cybermissions, a Los Angeles based Christian non-profit that uses computers and the internet to facilitate the Great Commison.
+Learn more at www.cybermissions.org.
+
 <Header>Open Source
 This app's source code is also available under the GPLv3 open-source license at:
-https://github.com/LightSys/
+https://github.com/johnedmiston/MP3Tutor
 
 This app includes the following open source libraries:

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.lightsys.audioapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -97,7 +97,7 @@ public class notesActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_all_notes) {
             Intent myIntent = new Intent(notesActivity.this, NoteSelect.class);
             notesActivity.this.startActivity(myIntent);
         }

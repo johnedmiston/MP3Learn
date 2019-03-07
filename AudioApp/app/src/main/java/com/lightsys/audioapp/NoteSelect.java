@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.lightsys.audioapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +24,6 @@ public class NoteSelect extends AppCompatActivity {
     private NotesAdapter nAdapter;
     private RecyclerView notesRecycler;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,17 +32,18 @@ public class NoteSelect extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //make a new note
-        FloatingActionButton fab = findViewById(R.id.fabNew);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton newNote = findViewById(R.id.fabNew);
+        newNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NotesBuilder NewNote = new NotesBuilder();
-                Intent openNote= new Intent(NoteSelect.this,MainActivity.class);
+                Intent openNote = new Intent(NoteSelect.this, notesActivity.class);
+                openNote.putExtra("filename", "Note1.txt");
                 startActivity(openNote);
             }
         });
 
-        notesRecycler = findViewById(R.id.recycle_view_note);
+        notesRecycler = findViewById(R.id.recycler_view_note);
 
         nAdapter = new NotesAdapter(notesList);
         RecyclerView.LayoutManager mLayoutManager =
@@ -65,7 +65,6 @@ public class NoteSelect extends AppCompatActivity {
         });
 
         prepareNotes();
-
     }
 
     private void prepareNotes() {
@@ -78,7 +77,6 @@ public class NoteSelect extends AppCompatActivity {
             NotesBuilder note = new NotesBuilder(theFile, Open(theFile));
             notesList.add(note);
         }
-
     }
 
     public String Open(String fileName) {

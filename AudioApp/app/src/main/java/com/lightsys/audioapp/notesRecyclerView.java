@@ -1,5 +1,7 @@
 package com.lightsys.audioapp;
 
+import android.support.v7.widget.RecyclerView;
+
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,45 +16,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
-
-/*  class Recycler_View_Adapter
-        Creating a Recycling list with the size of "courseName"
-        using the layout from "layout_course_listitem.xml"
- */
-public class lessonRecyclerView extends RecyclerView.Adapter<lessonRecyclerView.ViewHolder>{
+public class notesRecyclerView extends RecyclerView.Adapter<notesRecyclerView.ViewHolder>{
     private static final String TAG = "Recycler_View_Adapter";
-
     //The names of the courses to be displayed
-    private ArrayList<String> mLessons = new ArrayList<>();
+    private ArrayList<String> mNotes = new ArrayList<>();
 
     private Context mContext;
     private MainActivity parent;
     private int size;
 
     //Default constructor
-    public lessonRecyclerView(ArrayList<Lesson> lessons, Context context, Activity parent){
+    public notesRecyclerView(ArrayList<Note> notes, Context context, Activity parent){
         mContext = context;
-        for (int i = 0; i < lessons.size(); i++){
-            mLessons.add(lessons.get(i).name);
+        for (int i = 0; i < notes.size(); i++){
+            mNotes.add(notes.get(i).getTitle());
         }
-        size = mLessons.size();
+        size = mNotes.size();
         this.parent = (MainActivity) parent;
     }
 
     @NonNull
     @Override
     //Recycling the view holders
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public notesRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_course_listitem, viewGroup, false);
-        ViewHolder holder = new ViewHolder(view);
+        notesRecyclerView.ViewHolder holder = new notesRecyclerView.ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull notesRecyclerView.ViewHolder viewHolder, final int position) {
         Log.d(TAG, "onBindViewHolder: called."); //Log for debugging
 
-        viewHolder.courseName.setText(mLessons.get(position));
+        viewHolder.courseName.setText(mNotes.get(position));
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
 
             /**
@@ -62,12 +58,11 @@ public class lessonRecyclerView extends RecyclerView.Adapter<lessonRecyclerView.
             @Override
             public void onClick(View v) {
                 //Logging for debugging
-                Log.d(TAG, "onClick: Clicked on : " + mLessons.get(position));
-                Toast.makeText(mContext, mLessons.get(position), Toast.LENGTH_SHORT).show();
-                parent.gotoAudio(position,mLessons.get(position));
+                Log.d(TAG, "onClick: Clicked on : " + mNotes.get(position));
+                Toast.makeText(mContext, mNotes.get(position), Toast.LENGTH_SHORT).show();
+                parent.gotoAudio(position,mNotes.get(position));
             }
         });
-
     }
 
     @Override
@@ -84,7 +79,6 @@ public class lessonRecyclerView extends RecyclerView.Adapter<lessonRecyclerView.
 
         //The layout for each list item
         LinearLayout parentLayout;
-
 
         /** Constructor */
         public ViewHolder(@NonNull View itemView) {

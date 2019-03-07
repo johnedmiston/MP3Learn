@@ -28,9 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getCourseData();
-        initRecyclerView();
-
-
+        initCourseRecyclerView();
     }
 
     private void getCourseData() {
@@ -83,31 +81,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initRecyclerView(){
+    private void initCourseRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.recycler_view_course);
         courseRecyclerView adapter = new courseRecyclerView(Courses, this,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+    
     private void initLessonRecyclerView(Course c){
         RecyclerView recyclerView = findViewById(R.id.recycler_view_lesson);
         lessonRecyclerView adapter = new lessonRecyclerView(c.lessons, this,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-
-
-    //Go to lesson activity
-    //TODO: Remove this once RecyclerView is implemented
-    private void lessonActivity() {
-        Intent lesson = new Intent(MainActivity.this, lessonActivity.class);
-        lesson.putExtra("lesson_name","Be Born Again");
-        lesson.putExtra("course_name","Spiritual Continuum");
-        lesson.putExtra("lesson_mp3","l1_born_again.mp3");
-        startActivity(lesson);
-    }
-
-
+    
     //Open menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
+    
     //Menu item actions
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -131,41 +118,47 @@ public class MainActivity extends AppCompatActivity {
         else if(id == R.id.action_about){
             Intent about = new Intent(this, About.class);
             startActivity(about);
-            return true;
+        }
+        else if(id == R.id.action_all_notes){
+            Intent notes = new Intent(this, NoteSelect.class);
+            startActivity(notes);
         }
         return super.onOptionsItemSelected(item);
     }
-
+    
     public void minimizeCourses() {
         LinearLayout courses = findViewById(R.id.content_courses);
         courses.setVisibility(View.INVISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(0,0);
         courses.setLayoutParams(size);
     }
+    
     public void expandCourses(){
         LinearLayout courses = findViewById(R.id.content_courses);
         courses.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         courses.setLayoutParams(size);
     }
+    
     public void minimizeLessons() {
         LinearLayout lessons = findViewById(R.id.content_lessons);
         lessons.setVisibility(View.INVISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(0,0);
         lessons.setLayoutParams(size);
     }
+    
     public void expandLessons(){
         LinearLayout lessons = findViewById(R.id.content_lessons);
         lessons.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lessons.setLayoutParams(size);
     }
-
+    
     public void setSelectedCourse(int position) {
         selectedCourse = position;
         initLessonRecyclerView((Course) Courses.get(position));
     }
-
+    
     public void gotoAudio(int position, String lesson_name) {
         Intent audio = new Intent(this,lessonActivity.class);
         Course select = (Course) Courses.get(selectedCourse);

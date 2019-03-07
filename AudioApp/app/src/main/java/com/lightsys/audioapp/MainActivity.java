@@ -95,7 +95,15 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
-
+    
+    /*
+    private void initNoteRecyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_note);
+        noteeRecyclerView adapter = new noteeRecyclerView(Courses, this,this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+    */
 
     //Go to lesson activity
     //TODO: Remove this once RecyclerView is implemented

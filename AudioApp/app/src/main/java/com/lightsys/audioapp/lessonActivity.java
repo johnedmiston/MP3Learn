@@ -251,6 +251,9 @@ public class lessonActivity extends AppCompatActivity {
             update.setName(inputIntent.getStringExtra("lesson_name"));
             update.setCourse(inputIntent.getStringExtra("course_name"));
             update.setSeekTime(currentPosition);
+            String noteTitle = null;
+            //if a note exists, set its .txt file title to noteTitle
+            update.setNotes(noteTitle);
             db.updateLesson(update);
             //TODO: Add stuff for notes
         }

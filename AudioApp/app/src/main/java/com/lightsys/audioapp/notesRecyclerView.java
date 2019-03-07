@@ -1,5 +1,6 @@
 package com.lightsys.audioapp;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 
 import android.app.Activity;
@@ -22,7 +23,7 @@ public class notesRecyclerView extends RecyclerView.Adapter<notesRecyclerView.Vi
     private ArrayList<String> mNotes = new ArrayList<>();
 
     private Context mContext;
-    private MainActivity parent;
+    private NoteSelect parent;
     private int size;
 
     //Default constructor
@@ -32,7 +33,7 @@ public class notesRecyclerView extends RecyclerView.Adapter<notesRecyclerView.Vi
             mNotes.add(notes.get(i).getTitle());
         }
         size = mNotes.size();
-        this.parent = (MainActivity) parent;
+        this.parent = (NoteSelect) parent;
     }
 
     @NonNull
@@ -60,7 +61,10 @@ public class notesRecyclerView extends RecyclerView.Adapter<notesRecyclerView.Vi
                 //Logging for debugging
                 Log.d(TAG, "onClick: Clicked on : " + mNotes.get(position));
                 Toast.makeText(mContext, mNotes.get(position), Toast.LENGTH_SHORT).show();
-                parent.gotoAudio(position,mNotes.get(position));
+                Intent openNote = new Intent(parent, notesActivity.class);
+                openNote.putExtra("filename", "Notes1.txt");
+                openNote.putExtra("title", mNotes.get(position));
+                parent.startActivity(openNote);
             }
         });
     }
@@ -74,7 +78,7 @@ public class notesRecyclerView extends RecyclerView.Adapter<notesRecyclerView.Vi
 
         /** Variables */
 
-        //Course name
+        //Note name
         TextView courseName;
 
         //The layout for each list item

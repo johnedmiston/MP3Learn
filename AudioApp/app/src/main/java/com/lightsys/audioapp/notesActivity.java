@@ -27,7 +27,7 @@ public class notesActivity extends AppCompatActivity {
         inputIntent = getIntent();
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_notes);
+        setContentView(R.layout.activity_note);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

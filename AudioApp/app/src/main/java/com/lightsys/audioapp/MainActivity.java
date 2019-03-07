@@ -139,10 +139,8 @@ public class MainActivity extends AppCompatActivity {
         courses.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         courses.setLayoutParams(size);
-
         //Set coursesOpen to true because we just opened it
         coursesOpen = true;
-
         //minimize the lesson
         LinearLayout lessons = findViewById(R.id.content_lessons);
         lessons.setVisibility(View.INVISIBLE);
@@ -155,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
         lessons.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lessons.setLayoutParams(size);
-
         //Set coursesOpen to false because we are closing it
         coursesOpen = false;
         //minimize Courses

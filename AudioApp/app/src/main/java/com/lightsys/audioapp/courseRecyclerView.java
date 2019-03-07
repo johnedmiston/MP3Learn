@@ -62,7 +62,6 @@ public class courseRecyclerView extends RecyclerView.Adapter<courseRecyclerView.
                 //Logging for debugging
                 Log.d(TAG, "onClick: Clicked on : " + mcourseNames.get(position));
                 Toast.makeText(mContext, mcourseNames.get(position), Toast.LENGTH_SHORT).show();
-                parent.minimizeCourses();
                 parent.expandLessons();
                 parent.setSelectedCourse(position);
 

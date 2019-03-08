@@ -29,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getCourseData();
-        getNotesData();
         initCourseRecyclerView();
-        initNotesRecyclerView();
     }
 
     private void getCourseData() {
@@ -84,12 +82,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getNotesData() {
-        Notes = new ArrayList<Note>();
-        Note sample = new Note("Hi Note","Note1.txt");
-        Notes.add(sample);
-    }
-
     private void initCourseRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.recycler_view_course);
         courseRecyclerView adapter = new courseRecyclerView(Courses, this,this);
@@ -100,13 +92,6 @@ public class MainActivity extends AppCompatActivity {
     private void initLessonRecyclerView(Course c){
         RecyclerView recyclerView = findViewById(R.id.recycler_view_lesson);
         lessonRecyclerView adapter = new lessonRecyclerView(c.lessons, this,this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void initNotesRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_note); //TODO: Load notes from DB
-        notesRecyclerView adapter = new notesRecyclerView(Notes, this, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -138,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         else if(id == R.id.action_all_notes){
             minimizeCourses();
             minimizeLessons();
-            expandNotes();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -169,20 +153,6 @@ public class MainActivity extends AppCompatActivity {
         lessons.setVisibility(View.VISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lessons.setLayoutParams(size);
-    }
-
-    public void minimizeNotes() {
-        LinearLayout notes = findViewById(R.id.content_all_notes);
-        notes.setVisibility(View.INVISIBLE);
-        LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(0,0);
-        notes.setLayoutParams(size);
-    }
-
-    public void expandNotes(){
-        LinearLayout notes = findViewById(R.id.content_all_notes);
-        notes.setVisibility(View.VISIBLE);
-        LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        notes.setLayoutParams(size);
     }
     
     public void setSelectedCourse(int position) {

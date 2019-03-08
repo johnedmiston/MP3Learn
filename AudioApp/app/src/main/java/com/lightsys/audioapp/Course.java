@@ -2,6 +2,7 @@ package com.lightsys.audioapp;
 
 import java.util.ArrayList;
 
+//Class to hold Course information
 public class Course {
     String name;
     ArrayList lessons;

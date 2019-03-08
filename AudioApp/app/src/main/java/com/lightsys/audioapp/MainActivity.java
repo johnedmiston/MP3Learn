@@ -20,7 +20,6 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList Courses;
-    ArrayList Notes;
     int selectedCourse;
     Button backToCourses;
     public boolean coursesOpen;
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Get all courses from the database by reading the file_dir.txt file
     private void getCourseData() {
         Courses = new ArrayList<Course>();//init the Array List
 
@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Clear all data from lessons
     private void resetLessons() {
         ArrayList<Lesson> allLessons = new ArrayList<>();
         for(Object c: Courses){
@@ -148,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
             db.updateLesson(lesson);
         }
     }
-  
+
+    //Functionality for autoplaying after an audio lesson is done
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -166,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Return a list of lessons in a given course
     private ArrayList findCourse(String courseName) {
         for(Object course : Courses){
             Course c = (Course) course;
@@ -177,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    //Locate the next lesson in the current course, if available
     private int findNext(ArrayList lessons, String lessonName) {
         for(int i = 0;i<lessons.size();i++){
             Lesson lesson = (Lesson) lessons.get(i);
@@ -191,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         return -1;
     }
 
+    //Show courses in recycler view
     public void expandCourses(){
         LinearLayout courses = findViewById(R.id.content_courses);
         courses.setVisibility(View.VISIBLE);
@@ -205,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
         lessons.setLayoutParams(size);
     }
 
+    //Show lessons in recycler view
     public void expandLessons(){
         LinearLayout lessons = findViewById(R.id.content_lessons);
         lessons.setVisibility(View.VISIBLE);
@@ -218,12 +224,14 @@ public class MainActivity extends AppCompatActivity {
         size = new LinearLayout.LayoutParams(0,0);
         courses.setLayoutParams(size);
     }
-    
+
+    //Set the course to be accessed
     public void setSelectedCourse(int position) {
         selectedCourse = position;
         initLessonRecyclerView((Course) Courses.get(position));
     }
 
+    //Load an Intent with selected lesson information and open lessonActivity
     public void gotoAudio(int position,boolean autoplay) {
         Intent audio = new Intent(this,lessonActivity.class);
         Course select = (Course) Courses.get(selectedCourse);

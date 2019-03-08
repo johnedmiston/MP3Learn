@@ -58,6 +58,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         contentValues.put(LESSON_COL_4, lesson.getNotes());
         db.insert(LESSON_TABLE_NAME, null, contentValues);
     }
+
     public void updateLesson(Lesson lesson){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -69,6 +70,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         String[] whereArgs = new String[] {lesson.getCourse(),lesson.getName()};
         db.update(LESSON_TABLE_NAME, contentValues, where, whereArgs);
     }
+
     public int getSeekTime(Lesson lesson) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "select * from " + LESSON_TABLE_NAME + " where "+LESSON_COL_1+" = ?"+" AND "+LESSON_COL_2+" = ?";
@@ -78,6 +80,7 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         res.close();
         return temp;
     }
+
     public String getNotes(Lesson lesson) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "select * from " + LESSON_TABLE_NAME + " where "+LESSON_COL_1+" = ?"+" AND "+LESSON_COL_2+" = ?";
@@ -87,8 +90,4 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         res.close();
         return temp;
     }
-
-
-
-
 }

@@ -64,10 +64,8 @@ public class courseRecyclerView extends RecyclerView.Adapter<courseRecyclerView.
                 Toast.makeText(mContext, mcourseNames.get(position), Toast.LENGTH_SHORT).show();
                 parent.expandLessons();
                 parent.setSelectedCourse(position);
-
             }
         });
-
     }
 
     @Override

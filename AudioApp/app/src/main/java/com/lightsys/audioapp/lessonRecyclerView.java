@@ -64,7 +64,7 @@ public class lessonRecyclerView extends RecyclerView.Adapter<lessonRecyclerView.
                 //Logging for debugging
                 Log.d(TAG, "onClick: Clicked on : " + mLessons.get(position));
                 Toast.makeText(mContext, mLessons.get(position), Toast.LENGTH_SHORT).show();
-                parent.gotoAudio(position);
+                parent.gotoAudio(position,false);
             }
         });
 

@@ -87,8 +87,4 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         res.close();
         return temp;
     }
-
-
-
-
 }

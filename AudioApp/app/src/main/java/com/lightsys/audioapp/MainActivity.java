@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     int selectedCourse;
     Button backToCourses;
     public boolean coursesOpen;
+    public final int NEXT = 0;
+    public final int ADVANCE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,25 +107,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    /*
-    private void initNoteRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_note);
-        noteeRecyclerView adapter = new noteeRecyclerView(Courses, this,this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-    */
-
-    //Go to lesson activity
-    //TODO: Remove this once RecyclerView is implemented
-    private void lessonActivity() {
-        Intent lesson = new Intent(MainActivity.this, lessonActivity.class);
-        lesson.putExtra("lesson_name","Be Born Again");
-        lesson.putExtra("course_name","Spiritual Continuum");
-        lesson.putExtra("lesson_mp3","l1_born_again.mp3");
-        startActivity(lesson);
-    }
-
     //Open menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,6 +139,50 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == NEXT) {
+            // Make sure the request was successful
+            if (resultCode == ADVANCE) {
+                String courseName = data.getStringExtra("course_name");
+                String lessonName = data.getStringExtra("lesson_name");
+                ArrayList theLessons = findCourse(courseName);
+                int next = findNext(theLessons,lessonName);
+                if(next != -1){
+                    gotoAudio(next);
+                }
+            }
+        }
+    }
+
+
+
+    private ArrayList findCourse(String courseName) {
+        for(Object course : Courses){
+            Course c = (Course) course;
+            if(c.name.equalsIgnoreCase(courseName)){
+                return c.lessons;
+            }
+        }
+        //This won't happen. It is just to make the editor happy.
+        return null;
+    }
+    private int findNext(ArrayList lessons, String lessonName) {
+        for(int i = 0;i<lessons.size();i++){
+            Lesson lesson = (Lesson) lessons.get(i);
+            if(lesson.getName().equalsIgnoreCase(lessonName)){
+                if(i+1 <lessons.size()){
+                    return i+1;
+                }else{
+                    return -1;
+                }
+            }
+        }
+        return -1;
+
     }
 
     public void expandCourses(){
@@ -191,13 +218,14 @@ public class MainActivity extends AppCompatActivity {
         initLessonRecyclerView((Course) Courses.get(position));
     }
 
-    public void gotoAudio(int position, String lesson_name) {
+    public void gotoAudio(int position) {
         Intent audio = new Intent(this,lessonActivity.class);
         Course select = (Course) Courses.get(selectedCourse);
         Lesson selectedLesson = (Lesson) select.getLessons().get(position);
         audio.putExtra("course_name",select.name);
-        audio.putExtra("lesson_name",lesson_name);
+        audio.putExtra("lesson_name",selectedLesson.name);
         audio.putExtra("lesson_mp3",selectedLesson.mp3);
-        startActivity(audio);
+        startActivityForResult(audio,NEXT);
     }
+
 }

@@ -21,6 +21,8 @@ import android.widget.Toast;
  */
 public class lessonActivity extends AppCompatActivity {
 
+    public final int ADVANCE = 1;
+
     private View mContentView;          //Main page
     private View mMediaControlsView;    //Top (audio) controls
 
@@ -58,9 +60,9 @@ public class lessonActivity extends AppCompatActivity {
         }
 
         //Get lesson data from input Intent
-        String mp3 = inputIntent.getStringExtra("lesson_mp3");
-        String name = inputIntent.getStringExtra("lesson_name");
-        String course = inputIntent.getStringExtra("course_name");
+        final String mp3 = inputIntent.getStringExtra("lesson_mp3");
+        final String name = inputIntent.getStringExtra("lesson_name");
+        final String course = inputIntent.getStringExtra("course_name");
 
         setTitle(name);
         Lesson lessonCheck = new Lesson(name,course);
@@ -135,6 +137,11 @@ public class lessonActivity extends AppCompatActivity {
             public void onClick(View view) {
                 media.seekTo(media.getDuration());
                 seek.setProgress(media.getCurrentPosition());
+                Intent ret = new Intent();
+                ret.putExtra("course_name",course);
+                ret.putExtra("lesson_name",name);
+                setResult(ADVANCE,ret);
+                finish();
             }
         });
 
@@ -174,6 +181,17 @@ public class lessonActivity extends AppCompatActivity {
                     mMediaControlsView.setVisibility(View.VISIBLE);
                     mVisible = true;
                 }
+            }
+        });
+        //This will fire when the end of the media is encountered.
+        media.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Intent ret = new Intent();
+                ret.putExtra("course_name",course);
+                ret.putExtra("lesson_name",name);
+                setResult(ADVANCE,ret);
+                finish();
             }
         });
     }

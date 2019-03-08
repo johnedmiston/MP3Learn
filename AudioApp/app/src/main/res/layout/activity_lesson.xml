@@ -1,156 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@android:color/white"
+    android:orientation="vertical"
     tools:context=".lessonActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
 
-    <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/dummy_content"
-        android:textColor="#33b5e5"
-        android:textSize="50sp"
-        android:textStyle="bold" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/content_controls"
+        style="?metaButtonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:background="@color/black_overlay"
+        tools:ignore="UselessParent">
+
+        <RelativeLayout
+            android:id="@+id/media_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@color/black_overlay"
+            tools:ignore="UselessParent">
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/previous_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="12dp"
+                android:background="@drawable/buttonbacking"
+                app:srcCompat="@android:drawable/ic_media_previous" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/back10_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_toRightOf="@+id/previous_button"
+                android:background="@drawable/buttonbacking"
+                app:srcCompat="@android:drawable/ic_media_rew" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/play_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="12dp"
+                android:layout_toLeftOf="@+id/fwd10_button"
+                android:layout_toRightOf="@+id/back10_button"
+                android:background="@drawable/buttonbacking"
+                app:srcCompat="@android:drawable/ic_media_play" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/fwd10_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_toLeftOf="@+id/next_button"
+                android:background="@drawable/buttonbacking"
+                app:srcCompat="@android:drawable/ic_media_ff" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="12dp"
+                android:background="@drawable/buttonbacking"
+                app:srcCompat="@android:drawable/ic_media_next" />
+
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/play_button"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="20dp" />
+        </RelativeLayout>
+    </LinearLayout><!-- Controls -->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.lightsys.audioapp.Notes_Temp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            tools:layout="@layout/notes_fragment" />
-
+        android:id="@+id/PDFVIEWER">
         <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/pdfView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent" />
+            android:background="@color/colorPrimaryDark" />
+    </LinearLayout><!-- PDF -->
 
-
-        <LinearLayout
-            android:id="@+id/content_notes"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/NOTESVIEWER">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/content_controls"
-                style="?metaButtonBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center_horizontal"
-                android:background="@color/black_overlay"
-                tools:ignore="UselessParent">
-
-                <RelativeLayout
-                    android:id="@+id/media_controls"
-                    style="?metaButtonBarStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|center_horizontal"
-                    android:background="@color/black_overlay"
-                    tools:ignore="UselessParent">
-
-                    <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/previous_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:background="@drawable/buttonbacking"
-                        android:layout_margin="12dp"
-                        app:srcCompat="@android:drawable/ic_media_previous" />
-
-                    <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/back10_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="12dp"
-                        android:layout_toRightOf="@+id/previous_button"
-                        android:background="@drawable/buttonbacking"
-                        app:srcCompat="@android:drawable/ic_media_rew" />
-
-                    <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/play_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="12dp"
-                        android:layout_toLeftOf="@+id/fwd10_button"
-                        android:layout_toRightOf="@+id/back10_button"
-                        android:background="@drawable/buttonbacking"
-                        app:srcCompat="@android:drawable/ic_media_play" />
-
-                    <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/fwd10_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="12dp"
-                        android:layout_toLeftOf="@+id/next_button"
-                        android:background="@drawable/buttonbacking"
-                        app:srcCompat="@android:drawable/ic_media_ff" />
-
-                    <android.support.v7.widget.AppCompatImageButton
-                        android:id="@+id/next_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/buttonbacking"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="12dp"
-                        app:srcCompat="@android:drawable/ic_media_next" />
-
-                    <android.support.v7.widget.AppCompatSeekBar
-                        android:id="@+id/seek_bar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/play_button"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="20dp" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <ScrollView
+            <EditText
+                android:id="@+id/notes_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/background_light">
+                android:layout_below="@id/play_button"
+                android:background="@android:color/white"
+                android:gravity="top"
+                android:hint="@string/note_hint"
+                android:cursorVisible="true"
+                android:inputType="none"
+                ></EditText>
+        </ScrollView>
+    </LinearLayout><!-- Notes -->
 
-                <EditText
-                    android:id="@+id/notes_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/play_button"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/background_light"
-                    android:gravity="top"
-                    android:hint="@string/note_hint">
-                </EditText>
-            </ScrollView>
-        </LinearLayout>
 
-    </FrameLayout>
-
-</FrameLayout>
+</LinearLayout>

@@ -21,3 +21,7 @@ This app's source code is also available under the GPLv3 open-source license at:
 https://github.com/johnedmiston/MP3Tutor
 
 This app includes the following open source libraries:
+
+<Header>Android PDF Viewer 2
+License: Apache License 2.0
+Website: https://github.com/barteksc/AndroidPdfViewerV2

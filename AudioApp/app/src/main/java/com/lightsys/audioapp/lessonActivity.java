@@ -276,6 +276,7 @@ public class lessonActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         if (id == R.id.action_notes) {
             LinearLayout.LayoutParams closed = new LinearLayout.LayoutParams(0,0);
             LinearLayout.LayoutParams open = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -305,15 +306,12 @@ public class lessonActivity extends AppCompatActivity {
                 isNotesOn = true;
                 pdf.setVisibility(View.INVISIBLE);
                 pdf.setLayoutParams(closed);
-
                 notes.setVisibility(View.VISIBLE);
                 notes.setLayoutParams(open);
 
             }
             notes.setEnabled(isNotesOn);
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 

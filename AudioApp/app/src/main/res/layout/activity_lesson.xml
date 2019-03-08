@@ -82,7 +82,6 @@
                 android:layout_margin="12dp"
                 android:background="@drawable/buttonbacking"
                 app:srcCompat="@android:drawable/ic_media_next" />
-
             <android.support.v7.widget.AppCompatSeekBar
                 android:id="@+id/seek_bar"
                 android:layout_width="match_parent"
@@ -126,6 +125,4 @@
                 ></EditText>
         </ScrollView>
     </LinearLayout><!-- Notes -->
-
-
 </LinearLayout>

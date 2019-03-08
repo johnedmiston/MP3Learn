@@ -16,6 +16,8 @@ import java.util.ArrayList;
 /*  class Recycler_View_Adapter
         Creating a Recycling list with the size of "courseName"
         using the layout from "layout_course_listitem.xml"
+
+        These are used on the main page.
  */
 public class courseRecyclerView extends RecyclerView.Adapter<courseRecyclerView.ViewHolder>{
     private static final String TAG = "Recycler_View_Adapter";

@@ -8,6 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
+/**
+ * This class is where we store data over app closes.
+ * The functions interact with the database so that we don't have to instantiate on our own.
+ * Just get a new connection.
+ */
+
 public class DatabaseConnection extends SQLiteOpenHelper {
     //Lesson variables
     public static final String LESSON_TABLE_NAME = "active_messages";
@@ -38,11 +44,19 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @param db
+     * This function is run with the start and only the first time the app is run.
+     */
     private void createTables(SQLiteDatabase db){
         String lessonTableCreate = String.format("create table " + LESSON_TABLE_NAME + " ( %s TEXT, %s TEXT PRIMARY KEY,%s INTEGER,%s TEXT)", LESSON_COL_1,LESSON_COL_2,LESSON_COL_3,LESSON_COL_4);
         db.execSQL(lessonTableCreate);
     }
 
+    /**
+     * @param lesson
+     * This function is for adding lessons to the database.
+     */
     public void addLesson(Lesson lesson){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "select * from " + LESSON_TABLE_NAME + " where "+LESSON_COL_1+" = ?"+" AND "+LESSON_COL_2+" = ?";
@@ -59,6 +73,11 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         db.insert(LESSON_TABLE_NAME, null, contentValues);
     }
 
+    /**
+     * @param lesson
+     * When a lesson is given to this function is updates the seekTime and note of the lesson in the database.
+     *
+     */
     public void updateLesson(Lesson lesson){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -71,6 +90,10 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         db.update(LESSON_TABLE_NAME, contentValues, where, whereArgs);
     }
 
+    /**
+     * @param lesson
+     * @return the seek time of the given lesson
+     */
     public int getSeekTime(Lesson lesson) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "select * from " + LESSON_TABLE_NAME + " where "+LESSON_COL_1+" = ?"+" AND "+LESSON_COL_2+" = ?";
@@ -81,6 +104,10 @@ public class DatabaseConnection extends SQLiteOpenHelper {
         return temp;
     }
 
+    /**
+     * @param lesson
+     * @return the note of the given lesson
+     */
     public String getNotes(Lesson lesson) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "select * from " + LESSON_TABLE_NAME + " where "+LESSON_COL_1+" = ?"+" AND "+LESSON_COL_2+" = ?";

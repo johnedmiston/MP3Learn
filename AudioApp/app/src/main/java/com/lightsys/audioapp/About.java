@@ -126,6 +126,7 @@ public class About extends AppCompatActivity {
             }
         }
     }
+    //Make the View small
     private static void textViewMinimize(TextView textView){
         textView.setVisibility(View.INVISIBLE);
         LinearLayout.LayoutParams size = new LinearLayout.LayoutParams(0,0);

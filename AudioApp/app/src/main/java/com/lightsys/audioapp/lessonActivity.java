@@ -21,7 +21,8 @@ import android.widget.Toast;
  */
 public class lessonActivity extends AppCompatActivity {
 
-    private View mContentView;          //Main page
+    private View mNotesView;            //Notes (initially hidden)
+    private View mMaterialView;         //Lesson Material
     private View mMediaControlsView;    //Top (audio) controls
 
     //Media Buttons
@@ -35,7 +36,6 @@ public class lessonActivity extends AppCompatActivity {
 
     //Other Declarations
     private Intent inputIntent;
-    private boolean mVisible;
     private boolean mIsPlaying = false;
     private Runnable mRunnable;
     private Handler mHandler = new Handler();
@@ -46,10 +46,9 @@ public class lessonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_lesson);
-
-        mVisible = true;
         mMediaControlsView = findViewById(R.id.media_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
+        //mMaterialView = findViewById(R.id.material_fragment);
+        mNotesView = findViewById(R.id.notes_fragment);
 
         //Enable back button
         ActionBar actionBar = this.getSupportActionBar();
@@ -162,20 +161,6 @@ public class lessonActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //When activity screen clicked, toggle visibility of controls
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mVisible) {
-                    mMediaControlsView.setVisibility(View.GONE);
-                    mVisible = false;
-                } else {
-                    mMediaControlsView.setVisibility(View.VISIBLE);
-                    mVisible = true;
-                }
-            }
-        });
     }
 
     //Creates and prepares media to be played
@@ -251,8 +236,8 @@ public class lessonActivity extends AppCompatActivity {
             update.setName(inputIntent.getStringExtra("lesson_name"));
             update.setCourse(inputIntent.getStringExtra("course_name"));
             update.setSeekTime(currentPosition);
+            update.setNotes("Note1.txt");   //TODO Add actual note name
             db.updateLesson(update);
-            //TODO: Add stuff for notes
         }
         media.release();
         media = null;

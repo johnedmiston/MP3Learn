@@ -21,7 +21,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        layout="@layout/content_note_select"
+        layout="@layout/content_all_notes"
         app:layout_anchor="@+id/fabNew"
         app:layout_anchorGravity="top|center" />
 

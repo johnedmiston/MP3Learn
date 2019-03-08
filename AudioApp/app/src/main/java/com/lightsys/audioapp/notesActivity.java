@@ -21,6 +21,7 @@ import java.io.OutputStreamWriter;
 public class notesActivity extends AppCompatActivity {
     private EditText EditText1;
     private Intent inputIntent;
+    private Note note;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +53,11 @@ public class notesActivity extends AppCompatActivity {
 
     public void Save(String fileName) {
         try {
-            OutputStreamWriter out =
-                    new OutputStreamWriter(openFileOutput(fileName, 0));
+            if(note.getLesson() != null){
+                note.getLesson().setNotes(note.getFilename());
+            }
+            //TODO Set note to a lesson if none present
+            OutputStreamWriter out = new OutputStreamWriter(openFileOutput(fileName, 0));
             out.write(EditText1.getText().toString());
             out.close();
             Toast.makeText(this, "Note saved!", Toast.LENGTH_SHORT).show();

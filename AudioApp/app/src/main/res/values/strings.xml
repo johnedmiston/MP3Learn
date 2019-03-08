@@ -12,4 +12,5 @@
     <string name="sp_init">hasInited</string>
     <string name="sp">audioApp</string>
     <string name="title_activity_about">About</string>
+    <string name="sample_note">Sample Note</string>
 </resources>

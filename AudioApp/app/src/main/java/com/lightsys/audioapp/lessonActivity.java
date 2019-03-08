@@ -214,6 +214,11 @@ public class lessonActivity extends AppCompatActivity {
             play.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
             mIsPlaying = true;
         }
+        //start the notes minimized.
+        LinearLayout.LayoutParams closed = new LinearLayout.LayoutParams(0,0);
+        LinearLayout notes = findViewById(R.id.NOTESVIEWER);
+        notes.setVisibility(View.INVISIBLE);
+        notes.setLayoutParams(closed);
     }
 
     //Creates and prepares media to be played
@@ -299,6 +304,7 @@ public class lessonActivity extends AppCompatActivity {
 
                 notes.setVisibility(View.VISIBLE);
                 notes.setLayoutParams(open);
+
             }
 
         }

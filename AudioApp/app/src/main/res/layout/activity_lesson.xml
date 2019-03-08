@@ -32,21 +32,12 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.lightsys.audioapp.Notes_Temp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            tools:layout="@layout/notes_fragment" />
 
         <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/pdfView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent" />
-
+            android:background="@drawable/pdf_notfound" />
 
         <LinearLayout
             android:id="@+id/content_notes"
@@ -143,7 +134,6 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginBottom="20dp"
-                    android:layout_height="match_parent"
                     android:background="@android:color/background_light"
                     android:gravity="top"
                     android:hint="@string/note_hint">

@@ -272,22 +272,24 @@ public class lessonActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+
      /*********************************************************************************************************************/
         //TODO: Description
+        //Switches between notes and pdf by hiding or showing the notes. The pdf should stays the same.
         if (id == R.id.action_notes) {
-            if (isNotesOn){
-                //Hide the Notes
-                Toast.makeText(this, "Notes are hidden", Toast.LENGTH_SHORT).show();
+
+            if (isNotesOn){ //Toggle off the notes
+                //TODO: Add code to hide the notes
+
                 isNotesOn = false;
             }
-            else{
-                //Show the Notes
-                Toast.makeText(this, "Notes are visible", Toast.LENGTH_SHORT).show();
+            else{ //Toggle on the notes
+                //TODO: Add code to show the notes
+
                 isNotesOn = true;
             }
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 

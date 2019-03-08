@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Function that initializes the course recycler view
     private void initCourseRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.recycler_view_course);
         courseRecyclerView adapter = new courseRecyclerView(Courses, this,this);
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    //Function that initializes the lesson recycler view
     private void initLessonRecyclerView(Course c){
         RecyclerView recyclerView = findViewById(R.id.recycler_view_lesson);
         lessonRecyclerView adapter = new lessonRecyclerView(c.lessons, this,this);

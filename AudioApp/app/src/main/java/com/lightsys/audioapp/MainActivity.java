@@ -105,15 +105,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    /*
-    private void initNoteRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_note);
-        noteeRecyclerView adapter = new noteeRecyclerView(Courses, this,this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-    */
-
     //Go to lesson activity
     //TODO: Remove this once RecyclerView is implemented
     private void lessonActivity() {
@@ -198,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         audio.putExtra("course_name",select.name);
         audio.putExtra("lesson_name",lesson_name);
         audio.putExtra("lesson_mp3",selectedLesson.mp3);
+        audio.putExtra("lesson_text", selectedLesson.textData);
         startActivity(audio);
     }
 }

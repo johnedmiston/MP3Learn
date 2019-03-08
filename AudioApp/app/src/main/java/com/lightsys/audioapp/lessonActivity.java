@@ -1,9 +1,11 @@
 package com.lightsys.audioapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.FormatException;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +44,8 @@ public class lessonActivity extends AppCompatActivity {
     private ImageButton next;
     private SeekBar seek;
     private EditText note;
+    PowerManager pm;
+    PowerManager.WakeLock wakeLocker;
 
     //Other Declarations
     private Intent inputIntent;
@@ -70,7 +74,6 @@ public class lessonActivity extends AppCompatActivity {
         text = inputIntent.getStringExtra("lesson_text");
         final boolean autoPlay = inputIntent.getBooleanExtra("autoplay",false);
 
-
         setTitle(name);
         Lesson lessonCheck = new Lesson(name,course);
         try {
@@ -80,7 +83,7 @@ public class lessonActivity extends AppCompatActivity {
             media.seekTo(seekTime);
         } catch (FormatException e) {
             Toast.makeText(getApplicationContext(), "Incorrect file format", Toast.LENGTH_SHORT).show();
-            mainActivity();
+            finish();
         }
 
         //If note already exists, load it
@@ -102,10 +105,12 @@ public class lessonActivity extends AppCompatActivity {
                     media.pause();
                     play.setImageDrawable(getResources().getDrawable(R.drawable.ic_play));
                     mIsPlaying = false;
+                    wakeLocker.release();
                 } else {
                     media.start();
                     play.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
                     mIsPlaying = true;
+                    wakeLocker.acquire();
                 }
             }
         });
@@ -211,11 +216,16 @@ public class lessonActivity extends AppCompatActivity {
                 finish();
             }
         });
-        media.setScreenOnWhilePlaying(true);
+        pm= (PowerManager) getSystemService(Context.POWER_SERVICE);
+
+        wakeLocker = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK,"AudioApp:wLTag");
+
+
         if(autoPlay){
             media.start();
             play.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
             mIsPlaying = true;
+            wakeLocker.acquire();
         }
         //start the notes minimized.
         LinearLayout.LayoutParams closed = new LinearLayout.LayoutParams(0,0);
@@ -251,14 +261,6 @@ public class lessonActivity extends AppCompatActivity {
             }
         };
         mHandler.postDelayed(mRunnable, 1000);
-    }
-    
-    //Returns from lesson to MainActivity
-    //and closes current lesson
-    private void mainActivity() {
-        Intent main = new Intent(lessonActivity.this, MainActivity.class);
-        startActivity(main);
-        finish();
     }
 
     //Open menu

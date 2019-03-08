@@ -60,6 +60,8 @@ public class lessonActivity extends AppCompatActivity {
         final String mp3 = inputIntent.getStringExtra("lesson_mp3");
         final String name = inputIntent.getStringExtra("lesson_name");
         final String course = inputIntent.getStringExtra("course_name");
+        final boolean autoPlay = inputIntent.getBooleanExtra("autoplay",false);
+
 
         setTitle(name);
         Lesson lessonCheck = new Lesson(name,course);
@@ -179,6 +181,13 @@ public class lessonActivity extends AppCompatActivity {
         media.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                Lesson update = new Lesson();
+                update.setName(inputIntent.getStringExtra("lesson_name"));
+                update.setCourse(inputIntent.getStringExtra("course_name"));
+                update.setSeekTime(0);
+                update.setNotes(getNote());
+                DatabaseConnection db = new DatabaseConnection(getApplicationContext());
+                db.updateLesson(update);
                 Intent ret = new Intent();
                 ret.putExtra("course_name",course);
                 ret.putExtra("lesson_name",name);
@@ -186,6 +195,11 @@ public class lessonActivity extends AppCompatActivity {
                 finish();
             }
         });
+        if(autoPlay){
+            media.start();
+            play.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
+            mIsPlaying = true;
+        }
     }
 
     //Creates and prepares media to be played
@@ -255,17 +269,29 @@ public class lessonActivity extends AppCompatActivity {
     protected void onStop() {
         //If we close before the audio is finished, save current position
         int currentPosition = media.getCurrentPosition();
+        DatabaseConnection db = new DatabaseConnection(getApplicationContext());
+        Lesson update = new Lesson();
         if(currentPosition != media.getDuration()){
-            DatabaseConnection db = new DatabaseConnection(getApplicationContext());
-            Lesson update = new Lesson();
             update.setName(inputIntent.getStringExtra("lesson_name"));
             update.setCourse(inputIntent.getStringExtra("course_name"));
             update.setSeekTime(currentPosition);
-            update.setNotes(note.getText().toString());
+        }else{
+            //Executes when you have finished
+            update.setName(inputIntent.getStringExtra("lesson_name"));
+            update.setCourse(inputIntent.getStringExtra("course_name"));
+            update.setSeekTime(0);
+            update.setNotes(getNote());
             db.updateLesson(update);
         }
+        //TODO: Add stuff for notes
+        update.setNotes(getNote());
+        //Put it in the DB
+        db.updateLesson(update);
         media.release();
         media = null;
         super.onStop();
+    }
+    public String getNote(){
+        return note.getText().toString();
     }
 }

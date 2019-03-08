@@ -1,5 +1,6 @@
 package com.lightsys.audioapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.nfc.FormatException;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.media.MediaPlayer;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -209,6 +211,7 @@ public class lessonActivity extends AppCompatActivity {
                 finish();
             }
         });
+        media.setScreenOnWhilePlaying(true);
         if(autoPlay){
             media.start();
             play.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
@@ -280,11 +283,13 @@ public class lessonActivity extends AppCompatActivity {
             LinearLayout pdf = findViewById(R.id.PDFVIEWER);
             if (isNotesOn){
                 //Hide the Notes
-                Toast.makeText(this, "Notes are hidden", Toast.LENGTH_SHORT).show();
                 isNotesOn = false;
 
                 notes.setVisibility(View.INVISIBLE);
                 notes.setLayoutParams(closed);
+                //closing the keyboard
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(notes.getWindowToken(),0);
 
                 pdf.setVisibility(View.VISIBLE);
                 pdf.setLayoutParams(open);
@@ -297,7 +302,6 @@ public class lessonActivity extends AppCompatActivity {
             }
             else{
                 //Show the Notes
-                Toast.makeText(this, "Notes are visible", Toast.LENGTH_SHORT).show();
                 isNotesOn = true;
                 pdf.setVisibility(View.INVISIBLE);
                 pdf.setLayoutParams(closed);
@@ -306,6 +310,7 @@ public class lessonActivity extends AppCompatActivity {
                 notes.setLayoutParams(open);
 
             }
+            notes.setEnabled(isNotesOn);
 
         }
 

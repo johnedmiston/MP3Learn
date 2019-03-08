@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@android:color/white"
     android:orientation="vertical"
     tools:context=".lessonActivity">
 
@@ -102,7 +102,7 @@
             android:id="@+id/pdfView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent" />
+            android:background="@color/colorPrimaryDark" />
     </LinearLayout><!-- PDF -->
 
     <LinearLayout
@@ -111,20 +111,17 @@
         android:id="@+id/NOTESVIEWER">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/background_light">
+            android:layout_height="match_parent">
 
             <EditText
                 android:id="@+id/notes_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/play_button"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginBottom="20dp"
-                android:background="@android:color/background_light"
+                android:background="@android:color/white"
                 android:gravity="top"
                 android:hint="@string/note_hint"
+                android:cursorVisible="true"
                 android:inputType="none"
                 ></EditText>
         </ScrollView>

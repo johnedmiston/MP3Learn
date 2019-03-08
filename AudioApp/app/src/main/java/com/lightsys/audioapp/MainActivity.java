@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         //Now we populate the Courses object
         while(input.indexOf("<course>")>=0){//look for a course
             String courseSubstring = input.substring(input.indexOf("<course>")+8,input.indexOf("</course>")).trim();//isolate the course
+            input = input.substring(courseSubstring.length());//remove the course from input
             Course newCourse = new Course(courseSubstring.substring(courseSubstring.indexOf("name:")+5,courseSubstring.indexOf(";")));
             courseSubstring = courseSubstring.substring(newCourse.getName().length()+5).trim();
             while(courseSubstring.indexOf("<lesson>")>=0){//look for a lesson
@@ -85,12 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 courseSubstring = courseSubstring.substring(courseSubstring.indexOf("</lesson>")+9).trim();
                 newCourse.addLesson(newLesson);//put lesson in course
             }
-            Courses.add(newCourse);//add the course to courses
-            //refind the course
-            courseSubstring = input.substring(input.indexOf("<course>"),input.indexOf("</course")+9);//isolate the course
-            //remove it from the other screen
-
-            input = input.substring(courseSubstring.length());
+            Courses.add(newCourse);//add the course to Courses
         }
     }
 
@@ -124,11 +120,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            //Put Action Code here when they select it.
-        }
-        else if(id == R.id.action_about){
+        if(id == R.id.action_about){
             Intent about = new Intent(this, About.class);
             startActivity(about);
         }

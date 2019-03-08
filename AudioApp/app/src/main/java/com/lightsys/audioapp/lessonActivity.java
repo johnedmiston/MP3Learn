@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.media.MediaPlayer;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -25,7 +26,7 @@ public class lessonActivity extends AppCompatActivity {
     private View mMaterialView;         //Lesson Material
     private View mMediaControlsView;    //Top (audio) controls
 
-    //Media Buttons
+    //Media & Notes Declarations
     private MediaPlayer media = null;
     private ImageButton play;
     private ImageButton back10;
@@ -33,6 +34,7 @@ public class lessonActivity extends AppCompatActivity {
     private ImageButton prev;
     private ImageButton next;
     private SeekBar seek;
+    private EditText note;
 
     //Other Declarations
     private Intent inputIntent;
@@ -48,7 +50,6 @@ public class lessonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lesson);
         mMediaControlsView = findViewById(R.id.media_controls);
         //mMaterialView = findViewById(R.id.material_fragment);
-        mNotesView = findViewById(R.id.notes_fragment);
 
         //Enable back button
         ActionBar actionBar = this.getSupportActionBar();
@@ -72,6 +73,14 @@ public class lessonActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Incorrect file format", Toast.LENGTH_SHORT).show();
             mainActivity();
         }
+
+        //If note already exists, load it
+        //Otherwise, start a new note
+
+        note = findViewById(R.id.notes_edit_text);
+        DatabaseConnection database = new DatabaseConnection(getApplicationContext());
+        note.setText(database.getNotes(lessonCheck));
+
 
         //If audio is playing, clicking play button pauses it
         //Otherwise, play audio
@@ -236,7 +245,7 @@ public class lessonActivity extends AppCompatActivity {
             update.setName(inputIntent.getStringExtra("lesson_name"));
             update.setCourse(inputIntent.getStringExtra("course_name"));
             update.setSeekTime(currentPosition);
-            update.setNotes("Note1.txt");   //TODO Add actual note name
+            update.setNotes(note.getText().toString());
             db.updateLesson(update);
         }
         media.release();

@@ -91,11 +91,13 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <fragment
-                android:id="@+id/notes_fragment"
+            <EditText
+                android:id="@+id/notes_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </fragment>
+                android:layout_height="match_parent"
+                android:background="@android:color/background_light"
+                android:gravity="top"
+                android:hint="Type notes here..."></EditText>
 
         </LinearLayout>
     </FrameLayout>

@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getCourseData();
         initCourseRecyclerView();
+        expandCourses();
     }
 
     private void getCourseData() {

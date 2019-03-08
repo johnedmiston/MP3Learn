@@ -1,5 +1,6 @@
 package com.lightsys.audioapp;
 
+//Class to hold Lesson information
 public class Lesson {
     String name;
     String mp3;

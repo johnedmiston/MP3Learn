@@ -22,8 +22,10 @@ import android.widget.Toast;
 import com.github.barteksc.pdfviewer.PDFView;
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
+ * This Actiity handles the audio (using MediaPlayer), lesson material (using PDFView),
+ * and user notes (stored as a String)
+ *
+ * Intents with lesson information come from MainActivity
  */
 public class lessonActivity extends AppCompatActivity {
 
@@ -144,7 +146,7 @@ public class lessonActivity extends AppCompatActivity {
         });
 
         //Seek to end of audio
-        //TODO: When end of audio reached, prompt to load next lesson
+        //When end of audio reached, load next lesson
         next = findViewById(R.id.next_button);
         next.setImageDrawable(getResources().getDrawable(R.drawable.ic_next));
         next.setOnClickListener(new View.OnClickListener() {
@@ -335,7 +337,6 @@ public class lessonActivity extends AppCompatActivity {
             update.setNotes(getNote());
             db.updateLesson(update);
         }
-        //TODO: Add stuff for notes
         update.setNotes(getNote());
         //Put it in the DB
         db.updateLesson(update);
@@ -343,6 +344,8 @@ public class lessonActivity extends AppCompatActivity {
         media = null;
         super.onStop();
     }
+
+    //Function to get String data from a note
     public String getNote(){
         return note.getText().toString();
     }

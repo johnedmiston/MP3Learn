@@ -23,7 +23,6 @@ import android.widget.Toast;
 public class lessonActivity extends AppCompatActivity {
 
     public final int ADVANCE = 1;
-    private View mMediaControlsView;    //Top (audio) controls
 
     //Media & Notes Declarations
     private MediaPlayer media = null;
@@ -47,8 +46,6 @@ public class lessonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_lesson);
-        mMediaControlsView = findViewById(R.id.media_controls);
-        //mMaterialView = findViewById(R.id.material_fragment);
 
         //Enable back button
         ActionBar actionBar = this.getSupportActionBar();

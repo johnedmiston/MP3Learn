@@ -57,6 +57,7 @@ public class CreateFileDir {
                                 File fileToAdd = null;
                                 switch(ext){
                                     case ".txt":
+                                    case ".pdf":
                                         if(isValidName(lessonContent.getName())){
                                             text = lessonContent.getName();
                                             fileToAdd= new File(filesToAdd.getPath()+"/"+lessonContent.getName());
@@ -86,7 +87,7 @@ public class CreateFileDir {
                             output += "</lesson>";
                         }
                     }
-Test                    output += "</course>";
+                    output += "</course>";
                 }
                 
             }

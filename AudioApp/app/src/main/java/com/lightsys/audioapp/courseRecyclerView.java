@@ -9,9 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.ArrayList;
 
 
@@ -61,7 +59,6 @@ public class courseRecyclerView extends RecyclerView.Adapter<courseRecyclerView.
             public void onClick(View v) {
                 //Logging for debugging
                 Log.d(TAG, "onClick: Clicked on : " + mcourseNames.get(position));
-                Toast.makeText(mContext, mcourseNames.get(position), Toast.LENGTH_SHORT).show();
                 parent.expandLessons();
                 parent.setSelectedCourse(position);
             }

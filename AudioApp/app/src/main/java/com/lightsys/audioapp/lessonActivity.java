@@ -1,6 +1,7 @@
 package com.lightsys.audioapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.nfc.FormatException;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -16,12 +17,23 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.github.barteksc.pdfviewer.PDFView;
+
+import java.io.File;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class lessonActivity extends AppCompatActivity {
 
+    //Helpers
+    private boolean isNotesOn = false;
+    //PDF views
+    PDFView pdfView;
+    private View mContentView;          //Main page
+    private View mMediaControlsView;    //Top (audio) controls
+    private PDFView mPDFViewer;
     public final int ADVANCE = 1;
 
     //Media & Notes Declarations
@@ -57,6 +69,7 @@ public class lessonActivity extends AppCompatActivity {
         final String mp3 = inputIntent.getStringExtra("lesson_mp3");
         final String name = inputIntent.getStringExtra("lesson_name");
         final String course = inputIntent.getStringExtra("course_name");
+        final String text = inputIntent.getStringExtra("lesson_text");
         final boolean autoPlay = inputIntent.getBooleanExtra("autoplay",false);
 
 
@@ -148,6 +161,14 @@ public class lessonActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        //PDF functionality
+        pdfView = findViewById(R.id.pdfView);
+        if(text != null) {
+            String pdf = text.replace(".pdf", "");
+            int rawID = getResources().getIdentifier(pdf, "raw", getPackageName());
+            pdfView.fromStream(getResources().openRawResource(rawID)).load();
+        }
 
         seek = findViewById(R.id.seek_bar);
         initSeekBar();
@@ -251,10 +272,20 @@ public class lessonActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+     /*********************************************************************************************************************/
         //TODO: Description
         if (id == R.id.action_notes) {
-            Toast.makeText(this, "Take Some Good Notes", Toast.LENGTH_SHORT).show();
+            if (isNotesOn){
+                //Hide the Notes
+                Toast.makeText(this, "Notes are hidden", Toast.LENGTH_SHORT).show();
+                isNotesOn = false;
+            }
+            else{
+                //Show the Notes
+                Toast.makeText(this, "Notes are visible", Toast.LENGTH_SHORT).show();
+                isNotesOn = true;
+            }
+
         }
 
         return super.onOptionsItemSelected(item);

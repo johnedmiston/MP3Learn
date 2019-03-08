@@ -229,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
         audio.putExtra("course_name",select.name);
         audio.putExtra("lesson_name",selectedLesson.name);
         audio.putExtra("lesson_mp3",selectedLesson.mp3);
+        audio.putExtra("lesson_text", selectedLesson.textData);
         audio.putExtra("autoplay",autoplay);
         startActivityForResult(audio,NEXT);
     }

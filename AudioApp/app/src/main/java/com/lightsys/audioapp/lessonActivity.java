@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.media.MediaPlayer;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -28,16 +29,14 @@ public class lessonActivity extends AppCompatActivity {
 
     //Helpers
     private boolean isNotesOn = false;
-
     //PDF views
-
     PDFView pdfView;
-
     private View mContentView;          //Main page
     private View mMediaControlsView;    //Top (audio) controls
     private PDFView mPDFViewer;
+    public final int ADVANCE = 1;
 
-    //Media Buttons
+    //Media & Notes Declarations
     private MediaPlayer media = null;
     private ImageButton play;
     private ImageButton back10;
@@ -45,10 +44,10 @@ public class lessonActivity extends AppCompatActivity {
     private ImageButton prev;
     private ImageButton next;
     private SeekBar seek;
+    private EditText note;
 
     //Other Declarations
     private Intent inputIntent;
-    private boolean mVisible;
     private boolean mIsPlaying = false;
     private Runnable mRunnable;
     private Handler mHandler = new Handler();
@@ -60,10 +59,6 @@ public class lessonActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_lesson);
 
-        mVisible = true;
-        mMediaControlsView = findViewById(R.id.media_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
-
         //Enable back button
         ActionBar actionBar = this.getSupportActionBar();
         if(actionBar != null){
@@ -71,10 +66,12 @@ public class lessonActivity extends AppCompatActivity {
         }
 
         //Get lesson data from input Intent
-        String mp3 = inputIntent.getStringExtra("lesson_mp3");
-        String name = inputIntent.getStringExtra("lesson_name");
-        String course = inputIntent.getStringExtra("course_name");
-        String text = inputIntent.getStringExtra("lesson_text");
+        final String mp3 = inputIntent.getStringExtra("lesson_mp3");
+        final String name = inputIntent.getStringExtra("lesson_name");
+        final String course = inputIntent.getStringExtra("course_name");
+        final String text = inputIntent.getStringExtra("lesson_text");
+        final boolean autoPlay = inputIntent.getBooleanExtra("autoplay",false);
+
 
         setTitle(name);
         Lesson lessonCheck = new Lesson(name,course);
@@ -87,6 +84,14 @@ public class lessonActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Incorrect file format", Toast.LENGTH_SHORT).show();
             mainActivity();
         }
+
+        //If note already exists, load it
+        //Otherwise, start a new note
+
+        note = findViewById(R.id.notes_edit_text);
+        DatabaseConnection database = new DatabaseConnection(getApplicationContext());
+        note.setText(database.getNotes(lessonCheck));
+
 
         //If audio is playing, clicking play button pauses it
         //Otherwise, play audio
@@ -149,6 +154,11 @@ public class lessonActivity extends AppCompatActivity {
             public void onClick(View view) {
                 media.seekTo(media.getDuration());
                 seek.setProgress(media.getCurrentPosition());
+                Intent ret = new Intent();
+                ret.putExtra("course_name",course);
+                ret.putExtra("lesson_name",name);
+                setResult(ADVANCE,ret);
+                finish();
             }
         });
 
@@ -185,20 +195,29 @@ public class lessonActivity extends AppCompatActivity {
             }
         });
 
-        //When activity screen clicked, toggle visibility of controls
-        mContentView.setOnClickListener(new View.OnClickListener() {
+        //This will fire when the end of the media is encountered.
+        media.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onClick(View view) {
-                if (mVisible) {
-                    mMediaControlsView.setVisibility(View.GONE);
-                    mVisible = false;
-                } else {
-                    mMediaControlsView.setVisibility(View.VISIBLE);
-                    mVisible = true;
-                }
+            public void onCompletion(MediaPlayer mp) {
+                Lesson update = new Lesson();
+                update.setName(inputIntent.getStringExtra("lesson_name"));
+                update.setCourse(inputIntent.getStringExtra("course_name"));
+                update.setSeekTime(0);
+                update.setNotes(getNote());
+                DatabaseConnection db = new DatabaseConnection(getApplicationContext());
+                db.updateLesson(update);
+                Intent ret = new Intent();
+                ret.putExtra("course_name",course);
+                ret.putExtra("lesson_name",name);
+                setResult(ADVANCE,ret);
+                finish();
             }
         });
-
+        if(autoPlay){
+            media.start();
+            play.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
+            mIsPlaying = true;
+        }
     }
 
     //Creates and prepares media to be played
@@ -256,8 +275,6 @@ public class lessonActivity extends AppCompatActivity {
      /*********************************************************************************************************************/
         //TODO: Description
         if (id == R.id.action_notes) {
-
-
             if (isNotesOn){
                 //Hide the Notes
                 Toast.makeText(this, "Notes are hidden", Toast.LENGTH_SHORT).show();
@@ -280,20 +297,29 @@ public class lessonActivity extends AppCompatActivity {
     protected void onStop() {
         //If we close before the audio is finished, save current position
         int currentPosition = media.getCurrentPosition();
+        DatabaseConnection db = new DatabaseConnection(getApplicationContext());
+        Lesson update = new Lesson();
         if(currentPosition != media.getDuration()){
-            DatabaseConnection db = new DatabaseConnection(getApplicationContext());
-            Lesson update = new Lesson();
             update.setName(inputIntent.getStringExtra("lesson_name"));
             update.setCourse(inputIntent.getStringExtra("course_name"));
             update.setSeekTime(currentPosition);
-            String noteTitle = null;
-            //if a note exists, set its .txt file title to noteTitle
-            update.setNotes(noteTitle);
+        }else{
+            //Executes when you have finished
+            update.setName(inputIntent.getStringExtra("lesson_name"));
+            update.setCourse(inputIntent.getStringExtra("course_name"));
+            update.setSeekTime(0);
+            update.setNotes(getNote());
             db.updateLesson(update);
-            //TODO: Add stuff for notes
         }
+        //TODO: Add stuff for notes
+        update.setNotes(getNote());
+        //Put it in the DB
+        db.updateLesson(update);
         media.release();
         media = null;
         super.onStop();
+    }
+    public String getNote(){
+        return note.getText().toString();
     }
 }

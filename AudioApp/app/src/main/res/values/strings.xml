@@ -1,17 +1,18 @@
 <resources>
-    <string name="app_name">MP3 Tutor</string>
+    <string name="app_name">MP3Learn</string>
     <string name="action_settings">Settings</string>
     <string name="action_notes">Toggle Note Taking</string>
     <string name="action_about">About</string>
 
     <string name="title_activity_lesson">lessonActivity</string>
+    <string name="title_activity_notes">notesActivity</string>
+    <string name="title_note_select">All Notes</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="sp_init">hasInited</string>
     <string name="sp">audioApp</string>
     <string name="title_activity_about">About</string>
     <string name="backToCourses">Back To Courses</string>
+    <string name="note_hint">Type note here...</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

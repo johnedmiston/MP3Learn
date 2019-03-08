@@ -3,18 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.lightsys.audioapp.MainActivity" >
 
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_restart_lessons"
+        android:title="Restart All Lessons"
         android:orderInCategory="100"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_all_notes"
-        android:title="All Notes"
-        android:orderInCategory="101"
         app:showAsAction="never" />
 
     <item android:id="@+id/action_about"
         android:title="@string/action_about"
         android:orderInCategory="999"
         app:showAsAction="never" />
+
 </menu>

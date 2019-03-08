@@ -75,6 +75,7 @@
                     <android.support.v7.widget.AppCompatImageButton
                         android:id="@+id/next_button"
                         android:layout_width="wrap_content"
+                        layou
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_margin="12dp"

@@ -43,6 +43,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
+                        android:background="@drawable/buttonbacking"
                         android:layout_margin="12dp"
                         app:srcCompat="@android:drawable/ic_media_previous" />
 
@@ -52,6 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
                         android:layout_toRightOf="@+id/previous_button"
+                        android:background="@drawable/buttonbacking"
                         app:srcCompat="@android:drawable/ic_media_rew" />
 
                     <android.support.v7.widget.AppCompatImageButton
@@ -62,6 +64,7 @@
                         android:layout_margin="12dp"
                         android:layout_toLeftOf="@+id/fwd10_button"
                         android:layout_toRightOf="@+id/back10_button"
+                        android:background="@drawable/buttonbacking"
                         app:srcCompat="@android:drawable/ic_media_play" />
 
                     <android.support.v7.widget.AppCompatImageButton
@@ -70,13 +73,14 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
                         android:layout_toLeftOf="@+id/next_button"
+                        android:background="@drawable/buttonbacking"
                         app:srcCompat="@android:drawable/ic_media_ff" />
 
                     <android.support.v7.widget.AppCompatImageButton
                         android:id="@+id/next_button"
                         android:layout_width="wrap_content"
-                        layou
                         android:layout_height="wrap_content"
+                        android:background="@drawable/buttonbacking"
                         android:layout_alignParentRight="true"
                         android:layout_margin="12dp"
                         app:srcCompat="@android:drawable/ic_media_next" />

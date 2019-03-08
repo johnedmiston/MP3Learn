@@ -132,8 +132,29 @@ public class MainActivity extends AppCompatActivity {
             Intent about = new Intent(this, About.class);
             startActivity(about);
         }
+        else if(id == R.id.action_restart_lessons){
+            resetLessons();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
+
+    private void resetLessons() {
+        ArrayList<Lesson> allLessons = new ArrayList<>();
+        for(Object c: Courses){
+            Course course = (Course) c;
+            for(Object lesson:course.lessons){
+                allLessons.add((Lesson) lesson);
+            }
+        }
+        for(Lesson lesson:allLessons){
+            DatabaseConnection db = new DatabaseConnection(getApplicationContext());
+            lesson.setSeekTime(0);
+            lesson.setNotes(db.getNotes(lesson));
+            db.updateLesson(lesson);
+        }
+    }
+  
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -145,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList theLessons = findCourse(courseName);
                 int next = findNext(theLessons,lessonName);
                 if(next != -1){
-                    gotoAudio(next);
+                    gotoAudio(next,true);
                 }
             }
         }
@@ -209,13 +230,14 @@ public class MainActivity extends AppCompatActivity {
         initLessonRecyclerView((Course) Courses.get(position));
     }
 
-    public void gotoAudio(int position) {
+    public void gotoAudio(int position,boolean autoplay) {
         Intent audio = new Intent(this,lessonActivity.class);
         Course select = (Course) Courses.get(selectedCourse);
         Lesson selectedLesson = (Lesson) select.getLessons().get(position);
         audio.putExtra("course_name",select.name);
         audio.putExtra("lesson_name",selectedLesson.name);
         audio.putExtra("lesson_mp3",selectedLesson.mp3);
+        audio.putExtra("autoplay",autoplay);
         startActivityForResult(audio,NEXT);
     }
 

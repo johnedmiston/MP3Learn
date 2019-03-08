@@ -107,12 +107,16 @@ public class lessonActivity extends AppCompatActivity {
                     media.pause();
                     play.setImageDrawable(getResources().getDrawable(R.drawable.ic_play));
                     mIsPlaying = false;
-                    wakeLocker.release();
+                    if(wakeLocker.isHeld()){
+                        wakeLocker.release();
+                    }
                 } else {
                     media.start();
                     play.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
                     mIsPlaying = true;
-                    wakeLocker.acquire();
+                    if(!wakeLocker.isHeld()){
+                        wakeLocker.acquire();
+                    }
                 }
             }
         });
@@ -345,7 +349,10 @@ public class lessonActivity extends AppCompatActivity {
         media.release();
         media = null;
         super.onStop();
-        wakeLocker.release();
+        if(wakeLocker.isHeld()){
+            wakeLocker.release();
+        }
+
     }
 
     //Function to get String data from a note

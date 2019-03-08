@@ -1,7 +1,6 @@
 package com.lightsys.audioapp;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.nfc.FormatException;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -14,12 +13,11 @@ import android.view.View;
 import android.media.MediaPlayer;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
-
-import java.io.File;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -31,9 +29,6 @@ public class lessonActivity extends AppCompatActivity {
     private boolean isNotesOn = false;
     //PDF views
     PDFView pdfView;
-    private View mContentView;          //Main page
-    private View mMediaControlsView;    //Top (audio) controls
-    private PDFView mPDFViewer;
     public final int ADVANCE = 1;
 
     //Media & Notes Declarations
@@ -51,6 +46,7 @@ public class lessonActivity extends AppCompatActivity {
     private boolean mIsPlaying = false;
     private Runnable mRunnable;
     private Handler mHandler = new Handler();
+    String text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +65,7 @@ public class lessonActivity extends AppCompatActivity {
         final String mp3 = inputIntent.getStringExtra("lesson_mp3");
         final String name = inputIntent.getStringExtra("lesson_name");
         final String course = inputIntent.getStringExtra("course_name");
-        final String text = inputIntent.getStringExtra("lesson_text");
+        text = inputIntent.getStringExtra("lesson_text");
         final boolean autoPlay = inputIntent.getBooleanExtra("autoplay",false);
 
 
@@ -272,18 +268,37 @@ public class lessonActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-     /*********************************************************************************************************************/
-        //TODO: Description
         if (id == R.id.action_notes) {
+            LinearLayout.LayoutParams closed = new LinearLayout.LayoutParams(0,0);
+            LinearLayout.LayoutParams open = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            LinearLayout notes = findViewById(R.id.NOTESVIEWER);
+            LinearLayout pdf = findViewById(R.id.PDFVIEWER);
             if (isNotesOn){
                 //Hide the Notes
                 Toast.makeText(this, "Notes are hidden", Toast.LENGTH_SHORT).show();
                 isNotesOn = false;
+
+                notes.setVisibility(View.INVISIBLE);
+                notes.setLayoutParams(closed);
+
+                pdf.setVisibility(View.VISIBLE);
+                pdf.setLayoutParams(open);
+                if(text != null) {
+                    String pdfDoc = text.replace(".pdf", "");
+                    int rawID = getResources().getIdentifier(pdfDoc, "raw", getPackageName());
+                    pdfView.fromStream(getResources().openRawResource(rawID)).load();
+                }
+
             }
             else{
                 //Show the Notes
                 Toast.makeText(this, "Notes are visible", Toast.LENGTH_SHORT).show();
                 isNotesOn = true;
+                pdf.setVisibility(View.INVISIBLE);
+                pdf.setLayoutParams(closed);
+
+                notes.setVisibility(View.VISIBLE);
+                notes.setLayoutParams(open);
             }
 
         }

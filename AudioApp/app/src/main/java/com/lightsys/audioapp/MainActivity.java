@@ -20,7 +20,6 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList Courses;
-    ArrayList Notes;
     int selectedCourse;
     Button backToCourses;
     public boolean coursesOpen;

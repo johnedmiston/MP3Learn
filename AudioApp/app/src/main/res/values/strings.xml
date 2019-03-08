@@ -5,10 +5,13 @@
     <string name="action_about">About</string>
 
     <string name="title_activity_lesson">lessonActivity</string>
+    <string name="title_activity_notes">notesActivity</string>
+    <string name="title_note_select">All Notes</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="sp_init">hasInited</string>
     <string name="sp">audioApp</string>
     <string name="title_activity_about">About</string>
     <string name="backToCourses">Back To Courses</string>
+    <string name="note_hint">Type note here...</string>
 </resources>

@@ -8,18 +8,14 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_all_notes"
-        android:title="All Notes"
-        android:orderInCategory="101"
-        app:showAsAction="never" />
-
     <item android:id="@+id/action_restart_lessons"
         android:title="Restart Lessons"
-        android:orderInCategory="102"
+        android:orderInCategory="101"
         app:showAsAction="never" />
 
     <item android:id="@+id/action_about"
         android:title="@string/action_about"
         android:orderInCategory="999"
         app:showAsAction="never" />
+
 </menu>

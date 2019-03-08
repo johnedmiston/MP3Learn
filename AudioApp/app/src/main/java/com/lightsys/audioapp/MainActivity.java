@@ -20,6 +20,7 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList Courses;
+    ArrayList Notes;
     int selectedCourse;
     Button backToCourses;
     public boolean coursesOpen;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getCourseData();
-        initRecyclerView();
+        initCourseRecyclerView();
         backToCourses = findViewById(R.id.back_to_courses);
         backToCourses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initRecyclerView(){
+    private void initCourseRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.recycler_view_course);
         courseRecyclerView adapter = new courseRecyclerView(Courses, this,this);
         recyclerView.setAdapter(adapter);
@@ -114,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
+    
     //Menu item actions
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -136,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
         else if(id == R.id.action_about){
             Intent about = new Intent(this, About.class);
             startActivity(about);
-            return true;
         }
         else if(id == R.id.action_restart_lessons){
             resetLessons();
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             db.updateLesson(lesson);
         }
     }
-
+  
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -178,8 +178,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     private ArrayList findCourse(String courseName) {
         for(Object course : Courses){
             Course c = (Course) course;
@@ -190,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
         //This won't happen. It is just to make the editor happy.
         return null;
     }
+
     private int findNext(ArrayList lessons, String lessonName) {
         for(int i = 0;i<lessons.size();i++){
             Lesson lesson = (Lesson) lessons.get(i);
@@ -202,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return -1;
-
     }
 
     public void expandCourses(){
@@ -232,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         size = new LinearLayout.LayoutParams(0,0);
         courses.setLayoutParams(size);
     }
-
+    
     public void setSelectedCourse(int position) {
         selectedCourse = position;
         initLessonRecyclerView((Course) Courses.get(position));

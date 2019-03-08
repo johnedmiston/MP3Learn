@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.media.MediaPlayer;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -22,11 +23,9 @@ import android.widget.Toast;
 public class lessonActivity extends AppCompatActivity {
 
     public final int ADVANCE = 1;
-
-    private View mContentView;          //Main page
     private View mMediaControlsView;    //Top (audio) controls
 
-    //Media Buttons
+    //Media & Notes Declarations
     private MediaPlayer media = null;
     private ImageButton play;
     private ImageButton back10;
@@ -34,10 +33,10 @@ public class lessonActivity extends AppCompatActivity {
     private ImageButton prev;
     private ImageButton next;
     private SeekBar seek;
+    private EditText note;
 
     //Other Declarations
     private Intent inputIntent;
-    private boolean mVisible;
     private boolean mIsPlaying = false;
     private Runnable mRunnable;
     private Handler mHandler = new Handler();
@@ -48,10 +47,8 @@ public class lessonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_lesson);
-
-        mVisible = true;
         mMediaControlsView = findViewById(R.id.media_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
+        //mMaterialView = findViewById(R.id.material_fragment);
 
         //Enable back button
         ActionBar actionBar = this.getSupportActionBar();
@@ -77,6 +74,14 @@ public class lessonActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Incorrect file format", Toast.LENGTH_SHORT).show();
             mainActivity();
         }
+
+        //If note already exists, load it
+        //Otherwise, start a new note
+
+        note = findViewById(R.id.notes_edit_text);
+        DatabaseConnection database = new DatabaseConnection(getApplicationContext());
+        note.setText(database.getNotes(lessonCheck));
+
 
         //If audio is playing, clicking play button pauses it
         //Otherwise, play audio
@@ -172,19 +177,6 @@ public class lessonActivity extends AppCompatActivity {
             }
         });
 
-        //When activity screen clicked, toggle visibility of controls
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mVisible) {
-                    mMediaControlsView.setVisibility(View.GONE);
-                    mVisible = false;
-                } else {
-                    mMediaControlsView.setVisibility(View.VISIBLE);
-                    mVisible = true;
-                }
-            }
-        });
         //This will fire when the end of the media is encountered.
         media.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -288,6 +280,8 @@ public class lessonActivity extends AppCompatActivity {
             update.setName(inputIntent.getStringExtra("lesson_name"));
             update.setCourse(inputIntent.getStringExtra("course_name"));
             update.setSeekTime(0);
+            update.setNotes(getNote());
+            db.updateLesson(update);
         }
         //TODO: Add stuff for notes
         update.setNotes(getNote());
@@ -298,6 +292,6 @@ public class lessonActivity extends AppCompatActivity {
         super.onStop();
     }
     public String getNote(){
-        return null;
+        return note.getText().toString();
     }
 }

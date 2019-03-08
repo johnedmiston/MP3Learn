@@ -344,6 +344,7 @@ public class lessonActivity extends AppCompatActivity {
         media.release();
         media = null;
         super.onStop();
+        wakeLocker.release();
     }
     public String getNote(){
         return note.getText().toString();

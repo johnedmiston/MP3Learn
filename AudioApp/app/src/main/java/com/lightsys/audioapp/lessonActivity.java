@@ -345,6 +345,7 @@ public class lessonActivity extends AppCompatActivity {
         media.release();
         media = null;
         super.onStop();
+        wakeLocker.release();
     }
 
     //Function to get String data from a note

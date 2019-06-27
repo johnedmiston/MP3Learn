@@ -13,7 +13,7 @@ Jeremiah Bray
 Learn more about LightSys Technology Services at
 https://lightsys.org/about
 
-The app was created for Cybermissions, a Los Angeles based Christian non-profit that uses computers and the internet to facilitate the Great Commison.
+The app was created for Cybermissions, a Los Angeles based Christian non-profit that uses computers and the internet to facilitate the Great Commission.
 Learn more at www.cybermissions.org.
 
 <Header>Open Source
